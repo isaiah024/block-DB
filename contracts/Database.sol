@@ -13,7 +13,7 @@ contract Database
     event LogNewQuery(string _query, address _id, QueryStatus status); // Event to launch when query has been performmed
 
     // This initializes our contract state (sets enum status to Pending once the program starts)
-    constructor(string memory _query){
+    constructor(string memory _query) public{
         query = _query;
         id = msg.sender;
         status = QueryStatus.Pending;
@@ -40,7 +40,7 @@ contract Database
             setStatusError();
             logQuery();
         }
-        if(_result) {
+        else {
             setStatusPerformed();
             logQuery();
         }
