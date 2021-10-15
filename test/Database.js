@@ -11,33 +11,34 @@ contract('Database', () => {
     // Checking if the status is initially Pending as set in the constructor
     assert.equal(status, "Pending");
   });
-it("should return the status Shipped", async ()=> {
+it("should return the status Error", async ()=> {
     // Instance of our deployed contract
     const instance = await QueryStatus.deployed();
 
-    // Calling the Shipped() function
-    await instance.Performed();
+    // Calling the Performed() function
+    await instance.queryDB();
 
     // Checking the initial status in our contract
     const status = await instance.Status();
 
-    // Checking if the status is Shipped
-    assert.equal(status, "Performed");
+    // Checking if the status is Error
+    assert.equal(status, "Error");
   });
 
-  it('should return correct event description', async()=>{
+  it('should return the status Performed', async()=>{
 
     // Instance of our deployed contract
     const instance = await QueryStatus.deployed();
 
     // Calling the Performed() function
-    const performed = await instance.Performed();
+    await instance.queryDB();
 
-    // Check event description is correct
-    truffleAssert.eventEmitted(performed, 'LogNewAlert', (event) =>{
-      return event.description == 'Your query has been performed';
+    // Checking the initial status in our contract
+    const status = await instance.Status();
+
+    assert.equal(status, "Performed");
       
-    });
   });
 
 });
+

@@ -31,12 +31,12 @@ contract Database
     // Sends query to DB if query does not succeed then must set status to error
     // If query completes must set status to performed
     function performQuery() internal pure returns (string memory queryResult){
-
+        return "Performed";
     }
 
     // Depending on DB result emit certain status
     function checkQueryResult(string memory _result) internal {
-        if ((keccak256(abi.encodePacked(_result)) == "Error" )) {
+        if (hashCompareWithLengthCheck(_result, "Error")) {
             setStatusError();
             logQuery();
         }
@@ -50,6 +50,14 @@ contract Database
     function logQuery() internal {
         emit LogNewQuery(query, id, status);
     }
+
+    function hashCompareWithLengthCheck(string memory a, string memory b) internal returns (bool) {
+    if(bytes(a).length != bytes(b).length) {
+        return false;
+    } else {
+        return keccak256(abi.encodePacked(a)) == keccak256(abi.encodePacked(b));
+    }
+}
 
     // Function to get the status of the query
     function getStatus(QueryStatus _status) internal pure returns (string memory) {
