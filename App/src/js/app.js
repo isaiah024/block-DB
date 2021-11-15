@@ -40,6 +40,10 @@ App = {
     $(document).on('click', '#submitQuery', function () {
       App.handleLoggingQuery(jQuery('#userId').val(), document.getElementById("query").value, "Error");
     });
+
+    $(document).on('click', '#getEvents', function () {
+      App.viewAllEvents();
+    });
   },
 
   handleRegistration: function (userId) {
@@ -71,9 +75,22 @@ App = {
 
   handleLoggingQuery: function (userId, query, status){
     let option = { from: App.currentAccount }
-    App.contracts.Database.methods.LogInfo(query, status).call(option)
+    //Call query.js here to get results of query?
+    App.contracts.Database.methods.LogInfo(query, status).send(option)
     //$('#results').text("--------Results display here--------")
-    document.getElementById('results').value = "--------Results display here--------";
+    document.getElementById('results').value = query + " " + status;
+  },
+
+  viewAllEvents: function (){
+    const START_BLOCK = 0;
+    const END_BLOCK = 7701000;
+    App.contracts.Database.getPastEvents("allEvents",
+        {                               
+            fromBlock: START_BLOCK,     
+            toBlock: 'latest'         
+        })                              
+    .then(events => console.log(events))
+    .catch((err) => console.error(err));
   },
 }
 
