@@ -1,20 +1,34 @@
 let mysql = require('mysql');
-
+/*
 let connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'password',
     database: 'student'
 });
-document.getElementById("submitQuery").addEventListener("click", callQuery());
+*/
+
+var pool  = mysql.createPool({
+  connectionLimit : 10,
+  host            : 'localhost',
+  user            : 'root',
+  password        : 'password',
+  database        : 'student'
+});
+
+//document.getElementById("submitQuery").addEventListener("click", callQuery());
 
 function myTest(){
   alert("It works!");
 }
 
-function callQuery(){
-    sql = document.getElementById("query").value;
-    connection.connect(function(err) {
+function callQuery(sql){
+  pool.query("SELECT *", function(err, rows, fields) {
+    if (err) throw err;
+    console.log(rows[0].example); //Show 1
+  });
+    //sql = document.getElementById("query").value;
+    /*connection.connect(function(err) {
         if (err) {
           document.getElementById('queryResults').innerHTML = 'error: ' + err.message;
           //return error;
@@ -39,8 +53,8 @@ function callQuery(){
         }
         //document.getElementById('queryResults').innerHTML = 'Closed the database connection.';
       });
-
-      window.onload = callQuery;
+      */
+      //window.onload = callQuery;
 }
 
   

@@ -70,15 +70,22 @@ App = {
           $('#message').text('Login failed. User is not authenticated.')
         }
       })
-
   },
 
   handleLoggingQuery: function (userId, query, status){
     let option = { from: App.currentAccount }
     //Call query.js here to get results of query?
-    App.contracts.Database.methods.LogInfo(query, status).send(option)
+    //$.getScript("D:/Blockchain/block-DB/App/src/js/bundle.js" ,function(){
+    //$.getScript("http://127.0.0.1:8887/bundle.js" ).then(function(){
+    //$.getScript("http://127.0.0.1:8887/query.js" ).then(function(){
+    //  myBundle.myTest();
+    //  callQuery(query);
+    //});
+    localStorage.setItem("userQuery", query);
+    window.location.href = "/results";
+    //App.contracts.Database.methods.LogInfo(query, status).send(option)
     //$('#results').text("--------Results display here--------")
-    document.getElementById('results').value = query + " " + status;
+    //document.getElementById('results').value = query + " " + status;
   },
 
   viewAllEvents: function (){
