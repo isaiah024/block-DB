@@ -44,6 +44,10 @@ App = {
     $(document).on('click', '#getEvents', function () {
       App.viewAllEvents();
     });
+
+    $(document).on('click', '#newQuery', function () {
+      window.location.href = "/query?userid=" + App.userId;
+    });
   },
 
   handleRegistration: function (userId) {
