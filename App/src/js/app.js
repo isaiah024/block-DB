@@ -38,7 +38,7 @@ App = {
     });
 
     $(document).on('click', '#submitQuery', function () {
-      App.handleLoggingQuery(jQuery('#userId').val(), document.getElementById("query").value, "Error");
+      App.handleLoggingQuery(jQuery('#userId').val(), document.getElementById("query").value);
     });
 
     $(document).on('click', '#getEvents', function () {
@@ -72,18 +72,10 @@ App = {
       })
   },
 
-  handleLoggingQuery: function (userId, query, status){
+  handleLoggingQuery: function (userId, query){
     let option = { from: App.currentAccount }
-    //Call query.js here to get results of query?
-    //$.getScript("D:/Blockchain/block-DB/App/src/js/bundle.js" ,function(){
-    //$.getScript("http://127.0.0.1:8887/bundle.js" ).then(function(){
-    //$.getScript("http://127.0.0.1:8887/query.js" ).then(function(){
-    //  myBundle.myTest();
-    //  callQuery(query);
-    //});
-    localStorage.setItem("userQuery", query);
-    window.location.href = "/results";
-    //App.contracts.Database.methods.LogInfo(query, status).send(option)
+    App.contracts.Database.methods.LogInfo(query).send(option)
+  
     //$('#results').text("--------Results display here--------")
     //document.getElementById('results').value = query + " " + status;
   },

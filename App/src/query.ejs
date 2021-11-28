@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Blockchain</title>
+  <script src="js/jquery-2.2.4.min.js"></script>
+	<style>
+	h1 {text-align: center;}
+	</style>
+</head>
+
+<body>
+	<h1>Query and result page</h1>
+    <div>
+      <form action="/query" method="POST">
+        <h4>Query</h4>
+        <div>
+          <input type="text" name="query" id="query">
+        </div>
+        <div>
+          <button type="submit" id="submitQuery" >Run Query</button>
+        </div>
+      </form>
+    <br>
+        <div>
+          <input type="text" id="results">
+        </div>
+    <br>
+        <div>
+          <button type="button" id="getEvents" >View All EVents</button>
+        </div>
+    <br>
+    
+</body>
+
+<script src="js/web3.min.js"></script>
+<script src="js/app.js"></script>
+</html>

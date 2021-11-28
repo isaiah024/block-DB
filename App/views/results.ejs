@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Blockchain</title>
+  <script src="js/jquery-2.2.4.min.js"></script>
+	<style>
+	h1 {text-align: center;}
+	</style>
+</head>
+
+<body>
+	<h1>Results page</h1>
+    <div>
+      <form>
+        <h4>Results</h4>
+        <tr>
+          <% Result.forEach(element => { %>
+            <td><b><%= JSON.stringify(element) %></b></td>
+          <% }); %>
+        </tr>
+    </div>
+    <br>
+        <div>
+          <button type="button" id="getEvents" >View All Events</button>
+        </div>
+    <br>
+    
+</body>
+
+<script src="js/web3.min.js"></script>
+<script src="js/app.js"></script>
+</html>

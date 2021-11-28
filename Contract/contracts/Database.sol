@@ -6,7 +6,7 @@ contract Database{
         uint userId;
     }
 
-    event LogNewQueryInfo(address senderID, uint id, string _query, string _status);
+    event LogNewQueryInfo(address senderID, uint id, string _query);
 
     mapping(address => User) public registeredUsers;
 
@@ -27,7 +27,7 @@ contract Database{
         }
     }
 
-    function LogInfo(string memory query, string memory status) public{
-        emit LogNewQueryInfo(msg.sender, registeredUsers[msg.sender].userId, query, status);
+    function LogInfo(string memory query) public{
+        emit LogNewQueryInfo(msg.sender, registeredUsers[msg.sender].userId, query);
     }
 }

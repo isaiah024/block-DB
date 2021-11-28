@@ -1,25 +1,16 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
-var query;
+
+app.set('view engine', 'ejs');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('src'));
 app.use(express.static('../Contract/build/contracts'));
-app.get('/', function (req, res) {
-  res.render('index.html');
-});
 
-app.get('/query', function (req, res) {
-  res.sendFile('query.html',{root : __dirname + '/src'});
-});
-
-app.get('/results', function (req, res){
-  if (typeof window !== 'undefined') {
-    console.log('we are running on the client')
-  } else {
-    console.log('we are running on the server');
-  }
+async function queryDB(userQuery){
   let mysql = require('mysql');
   var queryResults = "";
-  //var query = localStorage.getItem("userQuery");
 
   let connection = mysql.createConnection({
     host: 'localhost',
@@ -28,41 +19,63 @@ app.get('/results', function (req, res){
     database: 'student'
   });
 
-  connection.connect(function(err) {
-    if (err) {
-      //document.getElementById('queryResults').innerHTML = 'error: ' + err.message;
-      console.log(err);
-      //return error;
-    }
+  await connection.connect(function(err) {
+    if (err) { console.log(err); }
+    connection.query("SELECT * FROM students WHERE id = " + userQuery, (error, results, fields) => {
+      if (error) { console.log(error); }
+      connection.end(function(err) {
+        if (err) { console.log(err); }
+        return queryResults;
+        console.log("Closed the database connection");
+      });
+      queryResults = results;
+      console.log("Results within connection.query function: " + results);
+    });
   
-    //document.getElementById('queryResults').innerHTML = 'Connected to the MySQL server.';
+    console.log("The results in the queryDB function are: " + queryResults);
+  
     console.log("Connected to mySQL serevr");
-  });
 
-  connection.query("SELECT * FROM students WHERE id = " + queryID, (error, results, fields) => {
-    if (error) {
-      //document.getElementById('queryResults').innerHTML = error.message;
-      console.log(error);
-      //return error;
-    }
-    //document.getElementById('queryResults').innerHTML = results;
-    queryResults = results;
-    console.log(results);
-    //return results;
   });
+}
 
-  connection.end(function(err) {
-    if (err) {
-      //document.getElementById('queryResults').innerHTML ='error:' + err.message;
-      console.log(err);
-      //return error;
-    }
-    //document.getElementById('queryResults').innerHTML = 'Closed the database connection.';
-    console.log("Closed the database connection");
-  });
+app.get('/', function (req, res) {
+  res.render('index.ejs');
+});
 
-  //res.sendFile('results.html',{root : __dirname + '/src'});
-  res.send(queryResults);
+app.get('/query', function (req, res) {
+  res.render('query.ejs',{root : __dirname + '/src'});
+});
+
+app.post('/query', async function (req, res) {
+  try{
+    let mysql = require('mysql');
+    var queryResults = "";
+
+    let connection = mysql.createConnection({
+      host: 'localhost',
+      user: 'root',
+      password: 'password',
+      database: 'student'
+    });
+
+    connection.connect(function(err) {
+      if (err) { console.log(err); res.send("Error occured");}
+      console.log("Connected to mySQL server");
+
+      connection.query("SELECT * FROM students WHERE id = " + req.body.query, (error, results, fields) => {
+        if (error) { console.log(error); res.render("Error occured");}
+        connection.end(function(err) {
+          if (err) { console.log(err); res.render("Error occured");}
+        console.log("result variable in post: ", results[0]);
+        res.render('results.ejs', {Result: results});
+        console.log("Closed the database connection");
+        });
+      });
+
+    });
+  }catch(err){console.log(err); res.render("Error occured");}
+  
 });
 
 app.listen(3000, function () {

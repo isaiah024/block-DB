@@ -10,16 +10,15 @@
 </head>
 
 <body>
-	<h1>Query and result page</h1>
+	<h1>Query page</h1>
     <div>
-      <form>
+      <form action="/query" method="POST">
         <h4>Query</h4>
         <div>
           <input type="text" name="query" id="query">
         </div>
-		<br>
         <div>
-          <button type="button" id="submitQuery" >Run Query</button>
+          <button type="submit" id="submitQuery" >Run Query</button>
         </div>
       </form>
     <br>
@@ -28,7 +27,7 @@
         </div>
     <br>
         <div>
-          <button type="button" id="getEvents" >View All EVents</button>
+          <button type="button" id="getEvents" >View All Events</button>
         </div>
     <br>
     
@@ -36,6 +35,4 @@
 
 <script src="js/web3.min.js"></script>
 <script src="js/app.js"></script>
-<script type="text/javascript" src="js/bundle.js"></script>
-<script type="text/javascript" src="http://127.0.0.1:8887/bundle.js"></script>
 </html>
