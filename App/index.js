@@ -8,7 +8,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('src'));
 app.use(express.static('../Contract/build/contracts'));
 
-async function queryDB(userQuery){
+/*async function queryDB(userQuery){
   let mysql = require('mysql');
   var queryResults = "";
 
@@ -37,7 +37,7 @@ async function queryDB(userQuery){
     console.log("Connected to mySQL serevr");
 
   });
-}
+}*/
 
 app.get('/', function (req, res) {
   res.render('index.ejs');
@@ -50,6 +50,7 @@ app.get('/query', function (req, res) {
 app.post('/query', async function (req, res) {
   try{
     let mysql = require('mysql');
+    //const logQuery = require('../App/src/js/app.js').handeLoggingQuery;
     var queryResults = "";
 
     let connection = mysql.createConnection({
@@ -64,7 +65,7 @@ app.post('/query', async function (req, res) {
       console.log("Connected to mySQL server");
 
       connection.query("SELECT * FROM students WHERE id = " + req.body.query, (error, results, fields) => {
-        if (error) { console.log(error); res.render("Error occured");}
+        if (error) { console.log(error); res.render("Error occured"); }
         connection.end(function(err) {
           if (err) { console.log(err); res.render("Error occured");}
         console.log("result variable in post: ", results[0]);

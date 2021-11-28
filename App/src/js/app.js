@@ -74,7 +74,7 @@ App = {
 
   handleLoggingQuery: function (userId, query){
     let option = { from: App.currentAccount }
-    App.contracts.Database.methods.LogInfo(query).send(option)
+    App.contracts.Database.methods.LogInfo(query).send(option);
   
     //$('#results').text("--------Results display here--------")
     //document.getElementById('results').value = query + " " + status;
