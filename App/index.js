@@ -65,10 +65,10 @@ app.post('/query', async function (req, res) {
       console.log("Connected to mySQL server");
 
       connection.query("SELECT * FROM students WHERE id = " + req.body.query, (error, results, fields) => {
-        if (error) { console.log(error); res.render("Error occured"); }
+        if (error) { console.log(error); res.render("Error_occured"); }
         connection.end(function(err) {
-          if (err) { console.log(err); res.render("Error occured");}
-        console.log("result variable in post: ", results[0]);
+          if (err) { console.log(err); res.render("Error_occured");}
+        //console.log("result variable in post: ", results[0]);
         res.render('results.ejs', {Result: results});
         console.log("Closed the database connection");
         });

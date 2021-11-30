@@ -5,28 +5,104 @@
 	<title>Blockchain</title>
   <script src="js/jquery-2.2.4.min.js"></script>
 	<style>
-	h1 {text-align: center;}
+	h1 {
+	  text-align: center;
+	  background-color: #80ced6;
+	  padding: 7px;
+	}
+	
+	h4 {
+	  font-size:23px;
+	}
+
+	.button{
+	  display:inline-block;
+	  padding:3px 12px;
+	  border-radius:12px;
+	  font-family:"Times New Roman", Times, serif;
+	  font-weight:bold;
+	  font-size:14px;
+	  color:#FFFFFF;
+	  background-color:#00BFFF;
+	  text-align:center;
+	  cursor:pointer;
+	}
+
+	.events{
+	  background-color:#7B68EE;
+	}
+	.events:hover{
+	  background-color:#483D8B;
+	}
+
+	.anotherQuery{
+	  background-color:#00BFFF;
+	}
+	.anotherQuery:hover{
+	  background-color:#0093c4;
+	}
 	</style>
 </head>
 
 <body>
-	<h1>Results page</h1>
+	<h1>Query Results</h1>
+    <h4>Information of the patient</h4>
     <div>
-      <form>
-        <h4>Results</h4>
+    <table border="1" style="background-color:#F5F5F5">
+        <%
+        Result.forEach(function(results){
+        %>
         <tr>
-          <% Result.forEach(element => { %>
-            <td><b><%= JSON.stringify(element) %></b></td>
-          <% }); %>
+            <th>Patient ID: &nbsp</th>
+			<th><%=results.id %></th>
         </tr>
+        <% }) %>
+    </table>
+    </div>
+	<br>
+    <div>
+    <table border="1" style="width:50%;background-color:#F5F5F5">
+        <tr style="background-color:#D3D3D3">
+            <th>Trait</th>
+			<th>Number</th>
+        </tr>
+        <%
+        if(Result.length!=0){
+        Result.forEach(function(results){
+        %>
+        <tr>
+            <td><%=results.trait1 %></td>
+			<td><%=results.number1 %></td>
+        </tr>
+        <tr>
+            <td><%=results.trait2 %></td>
+			<td><%=results.number2 %></td>
+        </tr>
+        <tr>
+            <td><%=results.trait3 %></td>
+			<td><%=results.number3 %></td>
+        </tr>
+        <tr>
+            <td><%=results.trait4 %></td>
+			<td><%=results.number4 %></td>
+        </tr>
+        <tr>
+            <td><%=results.trait5 %></td>
+			<td><%=results.number5 %></td>
+        </tr>
+        <% }) %>
+        <% } else{ %>
+        <tr>
+            <td colspan="2">No data found</td>
+        </tr>
+        <% } %>
+    </table>
     </div>
     <br>
         <div>
-          <button type="button" id="getEvents" >View All Events</button>
-          <button type="button" id="newQuery" >Perform another query</button>
+          <button type="button" id="getEvents" class="button events" >View All Events</button>
+          <button type="button" id="newQuery" class="button anotherQuery" >Perform another query</button>
         </div>
-    <br>
-    
 </body>
 
 <script src="js/web3.min.js"></script>

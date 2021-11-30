@@ -8,8 +8,36 @@
 	.center {
 	  margin: auto;
 	  width: 21%;
-	  border: 5px solid #06f800;
+	  border: 10px solid #A9A9A9;
+	  background-color:#F5F5F5;
 	  padding: 10px;
+	}
+	
+	.button{
+	  display:inline-block;
+	  padding:3px 12px;
+	  border-radius:12px;
+	  font-family:"Times New Roman", Times, serif;
+	  font-weight:bold;
+	  font-size:14px;
+	  color:#FFFFFF;
+	  background-color:#00BFFF;
+	  text-align:center;
+	  cursor:pointer;
+	}
+	
+	.register{
+	  background-color:#00BFFF;
+	}
+	.register:hover{
+	  background-color:#0093c4;
+	}
+
+	.login{
+	  background-color:#7B68EE;
+	}
+	.login:hover{
+	  background-color:#483D8B;
 	}
 	</style>
 </head>
@@ -24,9 +52,9 @@
         </div>
 		<br>
         <div>
-          <div><button type="button" id="register">Register</button></div>
+          <div><button type="button" id="register" class="button register" >Register</button></div>
           <br>
-          <div><button type="button" id="login">Login</button></div>
+          <div><button type="button" id="login" class="button login">Login</button></div>
         </div>
       </form>
       <div class="error message">
